@@ -1,0 +1,15 @@
+[project]
+name = "MachineLearning-DataScienceII"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "luheiss", email = "hl7975@mci4me.at"},
+]
+dependencies = ["numpy>=2.3.3", "matplotlib>=3.10.7", "palmerpenguins>=0.1.4", "setuptools>=80.9.0", "pandas>=2.3.3", "seaborn>=0.13.2", "sklearn>=0.0.post12", "scikit-learn>=1.7.2"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
