@@ -6,6 +6,7 @@ def f(x, mu, sigma):
     exponent = -((x - mu)**2) / (2 * sigma**2)
     return faktor * exp(exponent)
 
+#Chat
 def create_data(mu, sigma, start=-5.0, end=5.0, step=0.1):
     xs = []
     ys = []
@@ -17,6 +18,7 @@ def create_data(mu, sigma, start=-5.0, end=5.0, step=0.1):
         ys.append(f(x, mu, sigma))
         i += 1
     return xs, ys
+#
 
 params = [
     {'mu': 1, 'sigma': 5, 'color': 'blue'},

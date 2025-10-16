@@ -37,10 +37,11 @@ from sklearn.metrics import classification_report, confusion_matrix # Für die A
 sklearn_df = df_fin.copy()
 
 features = sklearn_df[['bill_depth_mm', 'flipper_length_mm']]
-# Korrektur: X ist einfach features (umgewandelt in NumPy-Array)
+# X ist einfach features (umgewandelt in NumPy-Array)
 X = features.values
 labels = sklearn_df['species']
 
+# y ist 1 für Gentoo und 0 für Adelie
 y = (df_fin['species'] == 'Gentoo').astype(int).values 
 # oder mit der korrekten Variablen aus der Datei:
 # y = (df_fin[TARGET] == 'Gentoo').astype(int).values
@@ -55,8 +56,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = LinearSVC(C=1.0)  # C ist der Regularisierungsparameter
 model.fit(X_train, y_train)  # X_train: Features, y_train: Zielwerte
 predictions = model.predict(X_test)  # X_test: Testdaten
-
-
 
 
 # mit scaler
