@@ -32,13 +32,3 @@ plt.ylim(y.min() - 1, y.max() + 1)
 plt.legend()
 plt.show()
 
-
-
-## old code
-#poly_kernel_pipeline = make_pipeline(
-#    StandardScaler(),
-#    PolynomialFeatures(degree=3), 
-#    LinearRegression()
-#)
-#
-#poly_kernel_pipeline.fit(X, y)
