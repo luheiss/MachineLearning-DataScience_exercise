@@ -13,6 +13,9 @@ from sklearn.ensemble import RandomForestRegressor
 
 from sklearn.inspection import DecisionBoundaryDisplay
 
+### !!! ###
+### fixed version for the randomForest Problem where species are strings and now map to create a numerical representation ###
+
 peng = palmerpenguins.load_penguins()
 df= pd.DataFrame(peng)
 #df_cleaned = df.dropna()
@@ -38,7 +41,8 @@ X = features.values
 #X = features_rotated.values 
 #X = featuer_all # using 4 features -> score 0.9403
 
-y = df_cleaned['species']
+y = df_cleaned['species'].map({'Adelie':0, 'Gentoo':1, 'Chinstrap':2}).values
+species_names = ['Adelie', 'Gentoo', 'Chinstrap']
 print(y)
 #print(X)
 #print(features)
@@ -62,7 +66,7 @@ print(f"Anzahl der Blätter im Decision Tree: {pipe.named_steps['decisiontreecla
 plt.figure(figsize=(12,8))
 
 # visualize with two features
-dt.plot_tree(pipe.named_steps['decisiontreeclassifier'], filled=True, feature_names=['bill_depth_mm', 'flipper_length_mm'], class_names=pipe.named_steps['decisiontreeclassifier'].classes_)   
+dt.plot_tree(pipe.named_steps['decisiontreeclassifier'], filled=True, feature_names=['bill_depth_mm', 'flipper_length_mm'], class_names=species_names)   
 # visualize with four features
 #dt.plot_tree(pipe.named_steps['decisiontreeclassifier'], filled=True, feature_names=['bill_depth_mm', 'flipper_length_mm', 'bill_length_mm', 'body_mass_g'], class_names=pipe.named_steps['decisiontreeclassifier'].classes_) 
 plt.title('Decision Tree for Penguin Species Classification')   
@@ -78,7 +82,7 @@ print(f"Genauigkeit Random Forest: {score:.4f}")
 
 # Visualisierung eines Baumes im Random Forest
 plt.figure(figsize=(12,8))
-dt.plot_tree(pipe_randomForest.named_steps['randomforestclassifier'].estimators_[0], filled=True, feature_names=['bill_depth_mm', 'flipper_length_mm'], class_names=pipe_randomForest.named_steps['randomforestclassifier'].classes_)
+dt.plot_tree(pipe_randomForest.named_steps['randomforestclassifier'].estimators_[0], filled=True, feature_names=['bill_depth_mm', 'flipper_length_mm'], class_names=species_names)
 plt.title('A Decision Tree from the Random Forest for Penguin Species Classification')
 
 
@@ -99,7 +103,7 @@ plt.xticks(rotation=0) # Beschriftungen horizontal halten
 plt.tight_layout()
 
 
-plt.show()
+#plt.show()
 
 
 # Visualisierung der Trennung (Entscheidungsgrenzen)
