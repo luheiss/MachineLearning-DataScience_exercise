@@ -20,6 +20,5 @@ X_pca = pca.fit_transform(X)
 pca_df = pd.DataFrame(X_pca, columns=['PC1', 'PC2'])
 pca_df['species'] = cleaned_peng['species'].values
 
-sns.scatterplot(data=pca_df, x='PC1', y='PC2', hue='species', palette='Set1')
-plt.title('PCA der Palmer Penguins (4 Merkmale → 2 Komponenten)')
+sns.pairplot(data=pca_df, hue='species')
 plt.show()
