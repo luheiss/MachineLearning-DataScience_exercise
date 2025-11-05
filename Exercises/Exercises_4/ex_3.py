@@ -15,10 +15,10 @@ peng = load_penguins()
 df_cleaned = peng.dropna()
 
 # Nur zwei Klassen auswählen (z.B. Adelie und Gentoo)
-df_binary = df_cleaned[df_cleaned['species'].isin(['Adelie', 'Gentoo'])]
+df_binary = df_cleaned[df_cleaned['species'].isin(['Adelie', 'Gentoo', 'Chinstrap'])]
 
 X = df_binary[['bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'bill_length_mm']].values
-y = df_binary['species'].map({'Adelie': 0, 'Gentoo': 1}).values
+y = df_binary['species'].map({'Adelie': 0, 'Gentoo': 1,'Chinstrap':2}).values
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
@@ -30,7 +30,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Basismodelle definieren
 base_SVC = make_pipeline(
     StandardScaler(),
-    SVC(C=1.0, random_state=42, probability=True)
+    SVC(C=1.0, random_state=42, probability=True)       #probability=True for soft voting
 )
 base_DT = make_pipeline(
     StandardScaler(),
@@ -38,7 +38,7 @@ base_DT = make_pipeline(
 )
 base_LR = make_pipeline(
     StandardScaler(),
-    LogisticRegression(max_iter=1000, random_state=42)
+    LogisticRegression(max_iter=1000, random_state=42)  #max_iter for convergence, that means more iterations
 )
 
 # Bagging Classifier für jedes Modell
@@ -62,6 +62,14 @@ bag_LR = BaggingClassifier(
 bag_SVC.fit(X_train, y_train)
 bag_DT.fit(X_train, y_train)
 bag_LR.fit(X_train, y_train)
+
+base_SVC.fit(X_train, y_train)
+base_DT.fit(X_train, y_train)
+base_LR.fit(X_train, y_train)
+print("Einzelmodell Genauigkeiten:")
+print("SVC:", accuracy_score(y_test, base_SVC.predict(X_test)))
+print("Decision Tree:", accuracy_score(y_test, base_DT.predict(X_test)))
+print("Logistic Regression:", accuracy_score(y_test, base_LR.predict(X_test)))
 
 # Genauigkeiten prüfen
 for name, model in [('Bagging SVC', bag_SVC), ('Bagging DT', bag_DT), ('Bagging LR', bag_LR)]:

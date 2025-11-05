@@ -42,11 +42,17 @@ model_SVC.fit(X_train, y_train)
 model_DT.fit(X_train, y_train)
 model_LR.fit(X_train, y_train)
 
+print("Einzelmodell Genauigkeiten:")
+print("SVC:", accuracy_score(y_test, model_SVC.predict(X_test)))
+print("Decision Tree:", accuracy_score(y_test, model_DT.predict(X_test)))
+print("Logistic Regression:", accuracy_score(y_test, model_LR.predict(X_test)))
+
 estimators = [
     ('svc', model_SVC),
     ('dt', model_DT),
     ('lr', model_LR)
 ]
+#print("estimators:", estimators)
 
 # Soft Voting
 voting_clf_soft = en.VotingClassifier(
